@@ -7,6 +7,7 @@ createApp({
             users: [],
             selectedUseriD: [],
             selectedAppointmentId: [],
+            selectedAppointment: [],
             selecteToUpdate: 0,
             dateAppointment: '',
             messageAppointment: '',
@@ -194,6 +195,9 @@ createApp({
         getTheHours: function (date) {
             let d = new Date(date);
             return d.toLocaleTimeString();
+        },
+        confirmselectedappointment: function () {
+            alert(this.selectedAppointment);
         },
     },
     computed: {

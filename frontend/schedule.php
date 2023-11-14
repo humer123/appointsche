@@ -177,6 +177,10 @@ session_start();
                                                 <label class="form-label" for="schedule-title">Year Model</label>
                                                 <input class="form-control" type="text" v-model="yearModel" required />
                                             </div>
+                                            <div class="form-group col-6">
+                                                <label class="form-label" for="schedule-title">Year Model</label>
+                                                <input class="form-control col-12" type="datetime-local" v-model="dateAppointment" required />
+                                            </div>
                                         </div>
                                         <div class="col-md-12 mt-4">
                                             <div class="d-flex flex-wrap align-items-ceter justify-content-center">

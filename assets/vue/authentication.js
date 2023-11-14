@@ -24,7 +24,7 @@ createApp({
                 }else if(r.data == 2){
                     window.location.href = "frontend/admin/index.php";
                 }else{
-                    window.location.href = "assets/vue/logout.php";
+                    alert("No data existed!");
                 }
             });
         },

@@ -17,6 +17,7 @@ createApp({
             ORNumber: '',
             wheel: '',
             engineNumber: '',
+            dateAppointment: '',
             seriesModel: '',
             registeredVehicle: 0,
             yearModel: '',
@@ -206,6 +207,7 @@ createApp({
             data.append("engineNumber", vue.engineNumber);
             data.append("seriesModel", vue.seriesModel);
             data.append("yearModel", vue.yearModel);
+            data.append("date", vue.dateAppointment);
             axios.post('../Backend/mainRoutes.php', data)
                 .then(function (r) {
                     if (r.data == 200) {

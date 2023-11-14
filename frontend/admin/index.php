@@ -134,7 +134,7 @@ session_start();
                                             <div :class="u.status == 1 ? 'card-body rounded event-detail event-detail-primary' : 'card-body rounded event-detail event-detail-danger'">
                                                 <div class="d-flex align-items-top justify-content-between">
                                                     <div>
-                                                        <div class="text-center">
+                                                        <div class="">
                                                             <img :src="'../../assets/images/'+u.profile" class="rounded float-center" alt="" width="100">
                                                         </div>
                                                         <h4 class="my-2 mr-4">Full Name: {{u.fullname}}</h4>
@@ -245,12 +245,27 @@ session_start();
                                 </div>
                             </div>
                             <div id="requested" class="tab-pane fade">
+                                <div class="form-group form-group-sm">
+                                    <label for="exampleFormControlSelect1">Example select</label>
+                                    <select class="form-control form-control-md col-2" id="exampleFormControlSelect1">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                                <button class="mb-2 btn btn-md btn-info" @click="confirmselectedappointment">Approve selected</button>
                                 <div class="row">
                                     <div class="col-lg-4 col-md-6" v-for="ap of searchFromAppointment">
                                         <div class="card card-block card-stretch card-height">
-                                            <div class="card-body rounded event-detail event-detail-danger disabled">
+                                            <div class="card-body rounded event-detail event-detail-danger">
                                                 <div class="d-flex align-items-top justify-content-between">
                                                     <div class="row">
+                                                        <div class="form-group col-12">
+                                                            <input type="checkbox" name="selected" v-model="selectedAppointment" id="selected" :value="ap.appointId">
+                                                            <label>Select</label>
+                                                        </div>
                                                         <h4 class="col-12 mb-2 mr-4 text-capitalize">Full Name: {{ap.fullname}}</h4>
                                                         <p class="col-12 mb-2 text-danger fw-light text-capitalize">Email: {{ap.email}}</p>
                                                         <div class="col-6"><span class="text-dark font-weight-500">Or Number: <br></span><small>{{ap.orNumber}}</small></div>
@@ -258,42 +273,7 @@ session_start();
                                                         <div class="col-6"><span class="text-dark font-weight-500">Series Model: <br></span><small>{{ap.seriesModel}}</small></div>
                                                         <div class="col-6"><span class="text-dark font-weight-500">Year Model: <br></span><small>{{ap.yearModel}}</small></div>
                                                         <div class="col-12"><span class="text-dark font-weight-500">Request Date <br></span><small>{{dateToString(ap.created_at)}}</small></div>
-                                                        <div class="col-auto d-flex align-items-center pt-3">
-                                                            {{ap.appointmentDate == '' ? "Set Appointment Here ->" : "On scheduled ->"}} <button class="btn btn-sm" @click="selectedAppointment(ap.appointId)" data-toggle="modal" data-target="#date-appoint" :disabled="ap.appointmentDate == '' ? false : true"><i class="fa fa-calendar fa-2x px-1" aria-hidden="true"></i></button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal fade" id="date-appoint" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-body" v-for="ap of selectedAppointmentId">
-                                                    <div class="popup text-left">
-                                                        <h4 class="mb-3">Set Schedule</h4>
-                                                        <div class="form">
-                                                            <div class="content create-workform row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="schedule-start-date">Appointment Date</label>
-                                                                        <input class="form-control col-12" type="datetime-local" v-model="dateAppointment" required />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="schedule-start-date">Message (Optional)</label>
-                                                                        <textarea name="messageOption" class="form-control col-12" v-model="messageAppointment" cols="3"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12 mt-4">
-                                                                    <div class="d-flex flex-wrap align-items-ceter justify-content-center">
-                                                                        <button class="btn btn-primary mr-4" data-dismiss="modal">Cancel</button>
-                                                                        <button class="btn btn-outline-primary" type="button" @click="setAppointmentToUserAdmin(ap.appointId)">Save</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <div class="col-12"><button class="mb-2 btn btn-md btn-info float-right" @click="confirmselectedappointment">Approve</button></div>
                                                     </div>
                                                 </div>
                                             </div>

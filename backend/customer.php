@@ -37,9 +37,9 @@ class customer
         return $this->updateVehicleFunction($vehicleId, $updateSnumber, $updatemodel, $updateyear, $updatelicPlaNum);
     }
 
-    public function sendAppointment($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel)
+    public function sendAppointment($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel, $date)
     {
-        return $this->sendAppointmentFunction($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel);
+        return $this->sendAppointmentFunction($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel, $date);
     }
 
     public function user($user_id)
@@ -158,13 +158,13 @@ class customer
         }
     }
 
-    private function sendAppointmentFunction($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel)
+    private function sendAppointmentFunction($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel, $date)
     {
         try {
             $database = new database();
             if ($database->getStatus()) {
                 $query = $database->getCon()->prepare($this->sendAppointmentQuery());
-                $query->execute(array($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel));
+                $query->execute(array($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel, $date));
                 $database->closeConnection();
                 if (!$query->fetch()) {
                     return 200;
@@ -270,7 +270,7 @@ class customer
 
     private function sendAppointmentQuery()
     {
-        return "INSERT INTO `appointments`(`user_id`, `fullname`, `email`, `orNumber`, `wheel`, `engineNumber`, `seriesModel`, `yearModel`) VALUES (?,?,?,?,?,?,?,?)";
+        return "INSERT INTO `appointments`(`user_id`, `fullname`, `email`, `orNumber`, `wheel`, `engineNumber`, `seriesModel`, `yearModel`, `appointmentDate`) VALUES (?,?,?,?,?,?,?,?,?)";
     }
 
     private function viewAppointmentQuery()
