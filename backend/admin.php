@@ -18,6 +18,10 @@ include_once('database.php');
             return $this->updateUserAdminFunction($status, $userid);
         }
 
+        public function updateApproveAppointment($appId){
+            return $this->approveAppointment($appId);
+        }
+
         public function setAppointmentToUserAdmin($date, $message, $appId){
             return $this->setAppointmentToUserAdminFunction($date, $message, $appId);
         }
@@ -112,6 +116,28 @@ include_once('database.php');
             }
         }
 
+        private function approveAppointment($appId){
+            try {
+                $db = new database();
+                if($db->getStatus()){
+                    $query = $db->getCon()->prepare($this->approveAppointmentQuery());
+                    $query->execute(array($appId));
+
+                    if(!$query->fetch()){
+                        $db->closeConnection();
+                        return 200;
+                    }else{
+                        $db->closeConnection();
+                        return 400;
+                    }
+                }else{
+                    return 501;
+                }
+            } catch (PDOException $th) {
+                throw $th;
+            }
+        }
+
         private function viewAppointmentAdminQuery(){
             return "SELECT appointments.*, appointmentdate as ad, fullname as fn, user_id as id FROM `appointments` WHERE appointmentDate > 1";
         }
@@ -130,6 +156,10 @@ include_once('database.php');
 
         private function setAppointmentToUserAdminQuery(){
             return "UPDATE `appointments` SET `appointmentDate`= ? , `message` = ? WHERE `appointId` = ?";
+        }
+
+        private function approveAppointmentQuery(){
+            return "UPDATE `appointments` set `status` = 1 WHERE appointId = ?";
         }
     }
 ?>

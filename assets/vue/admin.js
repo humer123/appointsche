@@ -8,6 +8,7 @@ createApp({
             selectedUseriD: [],
             selectedAppointmentId: [],
             selectedAppointment: [],
+            allAppointmentIdS: [],
             selecteToUpdate: 0,
             dateAppointment: '',
             messageAppointment: '',
@@ -57,12 +58,14 @@ createApp({
                     vue.appointments = [];
 
                     for (var u of r.data) {
+                        vue.allAppointmentIdS.push(u.appointId);
                         vue.appointments.push({
                             appointId: u.appointId,
                             fullname: u.fullname,
                             email: u.email,
                             orNumber: u.orNumber,
                             wheel: u.wheel,
+                            stats: u.status,
                             message: u.message,
                             engineNumber: u.engineNumber,
                             appointmentDate: u.appointmentDate,
@@ -89,6 +92,7 @@ createApp({
                                 email: u.email,
                                 orNumber: u.orNumber,
                                 wheel: u.wheel,
+                                stats: u.status,
                                 engineNumber: u.engineNumber,
                                 appointmentDate: u.appointmentDate,
                                 seriesModel: u.seriesModel,
@@ -197,8 +201,29 @@ createApp({
             return d.toLocaleTimeString();
         },
         confirmselectedappointment: function () {
-            alert(this.selectedAppointment);
+            for(let i = 0; i < this.selectedAppointment.length; i++){
+                this.approveAppointment(this.selectedAppointment[i]);
+                this.viewAppointmentInCartAdmin();
+            }
         },
+        approveAppointment(id){
+            const vue = this;
+            var data = new FormData();
+            data.append("Method", "updateApproveAppointment");
+            data.append("appId", id);
+            axios.post('../../Backend/mainRoutes.php', data)
+                .then(function (r) {
+                    if(r.data == 200){
+                        alert("Approved Appointment");
+                    }
+                });
+        },
+        approveAll(){
+            for(let i = 0; i < this.allAppointmentIdS.length; i++){
+                this.approveAppointment(this.allAppointmentIdS[i]);
+                this.viewAppointmentInCartAdmin();
+            }
+        }
     },
     computed: {
         searchFromUsers: function () {
@@ -222,3 +247,4 @@ createApp({
         this.viewAppointmentInCartAdmin();
     }
 }).mount('#admin-vue')
+

@@ -69,7 +69,7 @@ function sendAppointment()
 {
     $customer = new customer();
 
-    echo $customer->sendAppointment($_SESSION["user_id"], $_POST["fullname"], $_POST["email"], $_POST["ORNumber"], $_POST["wheel"], $_POST["engineNumber"], $_POST["seriesModel"], $_POST["yearModel"], $_POST['date']);
+    echo $customer->sendAppointment($_SESSION["user_id"], $_POST["fullname"], $_POST["email"], $_POST["ORNumber"], $_POST["wheel"], $_POST["engineNumber"], $_POST["seriesModel"], $_POST["yearModel"], $_POST['date'], $_POST['Certificate']);
 }
 
 function changePassword()
@@ -129,4 +129,11 @@ function setAppointmentToUserAdmin()
     $admin = new admin();
 
     echo $admin->setAppointmentToUserAdmin($_POST['date'],$_POST['message'],$_POST['appId']);
+}
+
+function updateApproveAppointment()
+{
+    $admin = new admin();
+
+    echo $admin->updateApproveAppointment($_POST['appId']);
 }

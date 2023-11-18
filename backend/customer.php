@@ -37,9 +37,9 @@ class customer
         return $this->updateVehicleFunction($vehicleId, $updateSnumber, $updatemodel, $updateyear, $updatelicPlaNum);
     }
 
-    public function sendAppointment($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel, $date)
+    public function sendAppointment($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel, $date, $cr)
     {
-        return $this->sendAppointmentFunction($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel, $date);
+        return $this->sendAppointmentFunction($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel, $date, $cr);
     }
 
     public function user($user_id)
@@ -158,13 +158,13 @@ class customer
         }
     }
 
-    private function sendAppointmentFunction($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel, $date)
+    private function sendAppointmentFunction($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel, $date, $cr)
     {
         try {
             $database = new database();
             if ($database->getStatus()) {
                 $query = $database->getCon()->prepare($this->sendAppointmentQuery());
-                $query->execute(array($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel, $date));
+                $query->execute(array($user_id, $fullname, $email, $ORNumber, $wheel, $engineNumber, $seriesModel, $yearModel, $date, $cr));
                 $database->closeConnection();
                 if (!$query->fetch()) {
                     return 200;
@@ -270,7 +270,7 @@ class customer
 
     private function sendAppointmentQuery()
     {
-        return "INSERT INTO `appointments`(`user_id`, `fullname`, `email`, `orNumber`, `wheel`, `engineNumber`, `seriesModel`, `yearModel`, `appointmentDate`) VALUES (?,?,?,?,?,?,?,?,?)";
+        return "INSERT INTO `appointments`(`user_id`, `fullname`, `email`, `orNumber`, `wheel`, `engineNumber`, `seriesModel`, `yearModel`, `appointmentDate`, `appointCR`) VALUES (?,?,?,?,?,?,?,?,?,?)";
     }
 
     private function viewAppointmentQuery()

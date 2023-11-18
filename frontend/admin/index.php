@@ -245,21 +245,12 @@ session_start();
                                 </div>
                             </div>
                             <div id="requested" class="tab-pane fade">
-                                <div class="form-group form-group-sm">
-                                    <label for="exampleFormControlSelect1">Example select</label>
-                                    <select class="form-control form-control-md col-2" id="exampleFormControlSelect1">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                </div>
                                 <button class="mb-2 btn btn-md btn-info" @click="confirmselectedappointment">Approve selected</button>
+                                <button class="mb-2 btn btn-md btn-info" @click="approveAll">Approve All</button>
                                 <div class="row">
                                     <div class="col-lg-4 col-md-6" v-for="ap of searchFromAppointment">
                                         <div class="card card-block card-stretch card-height">
-                                            <div class="card-body rounded event-detail event-detail-danger">
+                                            <div :class="ap.stats == 0 ? 'card-body rounded event-detail event-detail-danger' : 'card-body rounded event-detail event-detail-primary'">
                                                 <div class="d-flex align-items-top justify-content-between">
                                                     <div class="row">
                                                         <div class="form-group col-12">
@@ -268,18 +259,17 @@ session_start();
                                                         </div>
                                                         <h4 class="col-12 mb-2 mr-4 text-capitalize">Full Name: {{ap.fullname}}</h4>
                                                         <p class="col-12 mb-2 text-danger fw-light text-capitalize">Email: {{ap.email}}</p>
-                                                        <div class="col-6"><span class="text-dark font-weight-500">Or Number: <br></span><small>{{ap.orNumber}}</small></div>
+                                                        <div class="col-6"><span class="text-dark font-weight-500">O.R Number: <br></span><small>{{ap.orNumber}}</small></div>
                                                         <div class="col-6"><span class="text-dark font-weight-500">Wheels: <br></span><small>{{ap.wheel}}</small></div>
                                                         <div class="col-6"><span class="text-dark font-weight-500">Series Model: <br></span><small>{{ap.seriesModel}}</small></div>
                                                         <div class="col-6"><span class="text-dark font-weight-500">Year Model: <br></span><small>{{ap.yearModel}}</small></div>
                                                         <div class="col-12"><span class="text-dark font-weight-500">Request Date <br></span><small>{{dateToString(ap.created_at)}}</small></div>
-                                                        <div class="col-12"><button class="mb-2 btn btn-md btn-info float-right" @click="confirmselectedappointment">Approve</button></div>
+                                                        <div class="col-12"><button class="mb-2 btn btn-md btn-info float-right" @click="approveAppointment(ap.appointId)">Approve</button></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Modal -->
                                     <div class="modal fade" id="restrictUser" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">

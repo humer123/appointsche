@@ -162,6 +162,10 @@ session_start();
                                                 <input class="form-control" type="text" v-model="ORNumber" required />
                                             </div>
                                             <div class="form-group col-6">
+                                                <label class="form-label" for="schedule-title">Certificate of Registration</label>
+                                                <input class="form-control" type="text" v-model="Certificate" required />
+                                            </div>
+                                            <div class="form-group col-6">
                                                 <label class="form-label" for="schedule-title">wheel</label>
                                                 <input class="form-control" type="text" v-model="wheel" required />
                                             </div>
